@@ -26,12 +26,24 @@
     self.locationManager = [UWLocationManager new];
     self.locationManager.delegate = self;
     self.api = [UWPizzaPlaceAPI new];
+    AppDelegate* delegte = [[UIApplication sharedApplication] delegate];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshContextWithObjectDidChangeNotification:) name:@"reload" object:delegte];
 }
 
 - (void)locationManager:(UWLocationManager*)manager didObtainNewLongitude:(double)lon andLatitude:(double)lat {
     NSLog(@"lat: %f, lon: %f", lat, lon);
-    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"lat >= (%lf-0.01) AND lat <= (%lf+0.01) AND lon >= (%lf-0.01) AND lon >= (%lf+0.01)", lat, lat, lon, lon];
+    double delta = 0.1;
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"lat >= %@ AND lat <= %@ AND lon >= %@ AND lon <= %@", @(lat-0.1), @(lat+0.1), @(lon-0.1), @(lon+0.1)];
+    
+/*    NSPredicate* predicate = [NSPredicate predicateWithBlock:^BOOL(PizzaPlace*  _Nonnull pp, NSDictionary<NSString *,id> * _Nullable bindings) {
+        return pp.lat > lat - delta && pp.lat < lat + delta && pp.lon > lon - delta && pp.lon < lon + delta;
+    }];*/
     [self.fetchedResultsController.fetchRequest setPredicate:predicate];
+/*    NSError* error = nil;
+    [self.fetchedResultsController performFetch:&error];
+    if(error) {
+        NSLog(@"Can not fetch: %@", error);
+    }*/
     [self.api pizzaPlaces:lat lon:lon callback:^(double lat, double lon, NSArray * _Nonnull pizzaPlaces) {
         for(id pizzaPlaceResult in pizzaPlaces) {
             id location = pizzaPlaceResult[@"location"];
@@ -46,18 +58,18 @@
 }
 
 - (void)locationManager:(UWLocationManager*)manager didObtainError:(NSError*)error {
-    [[[UIAlertView alloc] initWithTitle:@"Can not get location" message:[error description] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+//    [[[UIAlertView alloc] initWithTitle:@"Can not get location" message:[error description] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"PizzaPlace"];
     [fetchRequest setFetchLimit:5];
+//    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"id = %@", @"none"]];
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
     fetchRequest.sortDescriptors = @[descriptor];
     //[fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"category = %@", self.category]];
 //    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"lat >= (%lf-0.01) AND lat <= (%lf+0.01) AND lon >= (%lf-0.01) AND lon >= (%lf+0.01)", lat, lat, lon, lon];
-    NSError *error = nil;
     
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     // Setup fetched results
@@ -66,7 +78,6 @@
                                                                           sectionNameKeyPath:nil
                                                                                    cacheName:nil];
     [self.fetchedResultsController setDelegate:self];
-    [self.fetchedResultsController performFetch:&error];
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -145,6 +156,16 @@
     PizzaPlace* object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     [cell.textLabel setText:[object name]];
     return cell;
+}
+
+-(void)refreshContextWithObjectDidChangeNotification:(NSNotification *)notification {
+    dispatch_async(dispatch_get_main_queue(), ^(){
+        NSError* error = nil;
+        [self.fetchedResultsController performFetch:&error];
+        if(error) {
+            NSLog(@"Can not fetch: %@", error);
+        }
+    });
 }
 
 @end

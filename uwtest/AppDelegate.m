@@ -181,6 +181,9 @@
             [childContext refreshObject:object mergeChanges:YES];
         }  
     }];
+    dispatch_async(dispatch_get_main_queue(), ^() {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"reload" object:self];
+    });
 }
 
 @end
