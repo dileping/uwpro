@@ -165,7 +165,7 @@
     if (!isParentContext) return;
     //Collect the objectIDs of the objects that changed
     NSMutableSet *objectIDs = [NSMutableSet set];
-    [changedContext performBlockAndWait:^{
+    [changedContext performBlock:^{
         NSDictionary *userInfo = notification.userInfo;
         for (NSManagedObject *changedObject in userInfo[NSUpdatedObjectsKey]) {
             [objectIDs addObject:changedObject.objectID];
@@ -176,13 +176,14 @@
         for (NSManagedObject *changedObject in userInfo[NSDeletedObjectsKey]) {
             [objectIDs addObject:changedObject.objectID];
         }
-    }];
-    //Refresh the changed objects
-    [childContext performBlockAndWait:^{
-        for (NSManagedObjectID *objectID in objectIDs) {
-            NSManagedObject *object = [childContext objectRegisteredForID:objectID];
-            [childContext refreshObject:object mergeChanges:YES];
-        }  
+        
+        //Refresh the changed objects
+        [childContext performBlock:^{
+            for (NSManagedObjectID *objectID in objectIDs) {
+                NSManagedObject *object = [childContext objectRegisteredForID:objectID];
+                [childContext refreshObject:object mergeChanges:YES];
+            }
+        }];
     }];
 }
 
