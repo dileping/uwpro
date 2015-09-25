@@ -83,8 +83,6 @@
 //    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"id = %@", @"none"]];
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
     fetchRequest.sortDescriptors = @[descriptor];
-    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"name != %@", @"lalala"];
-    [fetchRequest setPredicate:predicate];
     //[fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"category = %@", self.category]];
 //    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"lat >= (%lf-0.01) AND lat <= (%lf+0.01) AND lon >= (%lf-0.01) AND lon >= (%lf+0.01)", lat, lat, lon, lon];
     
@@ -96,11 +94,6 @@
                                                                           sectionNameKeyPath:nil
                                                                                    cacheName:nil];
     [self.fetchedResultsController setDelegate:self];
-    
-    predicate = [NSPredicate predicateWithFormat:@"name == %@", @"lalala"];
-    self.fetchedResultsController.fetchRequest.predicate = predicate;
-    
-    [self.fetchedResultsController performFetch:nil];
 }
 
 - (void) viewDidAppear:(BOOL)animated {
