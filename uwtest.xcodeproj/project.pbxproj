@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6535D44A1BB59F3900028FC0 /* UWLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6535D4491BB59F3900028FC0 /* UWLocationManager.m */; settings = {ASSET_TAGS = (); }; };
+		6535D44C1BB5A2F100028FC0 /* New_York_Trip.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 6535D44B1BB5A2F100028FC0 /* New_York_Trip.gpx */; settings = {ASSET_TAGS = (); }; };
+		6535D44E1BB5A32800028FC0 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6535D44D1BB5A32800028FC0 /* CoreLocation.framework */; };
 		659256D21BB59C150053EB58 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 659256D11BB59C150053EB58 /* main.m */; };
 		659256D51BB59C150053EB58 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 659256D41BB59C150053EB58 /* AppDelegate.m */; };
 		659256D81BB59C150053EB58 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 659256D71BB59C150053EB58 /* ViewController.m */; };
@@ -17,6 +20,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6535D4481BB59F3900028FC0 /* UWLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UWLocationManager.h; sourceTree = "<group>"; };
+		6535D4491BB59F3900028FC0 /* UWLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UWLocationManager.m; sourceTree = "<group>"; };
+		6535D44B1BB5A2F100028FC0 /* New_York_Trip.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = New_York_Trip.gpx; sourceTree = "<group>"; };
+		6535D44D1BB5A32800028FC0 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		659256CD1BB59C150053EB58 /* uwtest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = uwtest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		659256D11BB59C150053EB58 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		659256D31BB59C150053EB58 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -35,6 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6535D44E1BB5A32800028FC0 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +52,8 @@
 		659256C41BB59C150053EB58 = {
 			isa = PBXGroup;
 			children = (
+				6535D44D1BB5A32800028FC0 /* CoreLocation.framework */,
+				6535D44B1BB5A2F100028FC0 /* New_York_Trip.gpx */,
 				659256CF1BB59C150053EB58 /* uwtest */,
 				659256CE1BB59C150053EB58 /* Products */,
 			);
@@ -70,6 +80,8 @@
 				659256E41BB59C150053EB58 /* Info.plist */,
 				659256DC1BB59C150053EB58 /* uwtest.xcdatamodeld */,
 				659256D01BB59C150053EB58 /* Supporting Files */,
+				6535D4481BB59F3900028FC0 /* UWLocationManager.h */,
+				6535D4491BB59F3900028FC0 /* UWLocationManager.m */,
 			);
 			path = uwtest;
 			sourceTree = "<group>";
@@ -141,6 +153,7 @@
 			files = (
 				659256E31BB59C150053EB58 /* LaunchScreen.storyboard in Resources */,
 				659256E01BB59C150053EB58 /* Assets.xcassets in Resources */,
+				6535D44C1BB5A2F100028FC0 /* New_York_Trip.gpx in Resources */,
 				659256DB1BB59C150053EB58 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -154,6 +167,7 @@
 			files = (
 				659256D81BB59C150053EB58 /* ViewController.m in Sources */,
 				659256D51BB59C150053EB58 /* AppDelegate.m in Sources */,
+				6535D44A1BB59F3900028FC0 /* UWLocationManager.m in Sources */,
 				659256D21BB59C150053EB58 /* main.m in Sources */,
 				659256DE1BB59C150053EB58 /* uwtest.xcdatamodeld in Sources */,
 			);
@@ -217,7 +231,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -255,7 +269,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -304,6 +318,7 @@
 				659256E91BB59C150053EB58 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
