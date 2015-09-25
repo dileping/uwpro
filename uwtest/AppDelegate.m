@@ -151,6 +151,9 @@
                 NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
                 abort();
             }
+            dispatch_async(dispatch_get_main_queue(), ^() {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"reload" object:self];
+            });
         }];
     }
 }
@@ -181,9 +184,6 @@
             [childContext refreshObject:object mergeChanges:YES];
         }  
     }];
-    dispatch_async(dispatch_get_main_queue(), ^() {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"reload" object:self];
-    });
 }
 
 @end

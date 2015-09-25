@@ -32,8 +32,23 @@
 
 - (void)locationManager:(UWLocationManager*)manager didObtainNewLongitude:(double)lon andLatitude:(double)lat {
     NSLog(@"lat: %f, lon: %f", lat, lon);
+    static double const D = 500000. * 1.1;
+    double const R = 6371009.; // Earth readius in meters
+    double meanLatitidue = lat * M_PI / 180.;
+    double deltaLatitude = D / R * 180. / M_PI;
+    double deltaLongitude = D / (R * cos(meanLatitidue)) * 180. / M_PI;
+    double minLatitude = lat - deltaLatitude;
+    double maxLatitude = lat + deltaLatitude;
+    double minLongitude = lon - deltaLongitude;
+    double maxLongitude = lon + deltaLongitude;
     double delta = 0.1;
-    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"lat >= %@ AND lat <= %@ AND lon >= %@ AND lon <= %@", @(lat-0.1), @(lat+0.1), @(lon-0.1), @(lon+0.1)];
+/*    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"lat >= %@ AND lat <= %@ AND lon >= %@ AND lon <= %@", @(lat-0.1), @(lat+0.1), @(lon-0.1), @(lon+0.1)];*/
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:
+     @"(%@ <= lon) AND (lon <= %@)"
+     @"AND (%@ <= lat) AND (lat <= %@)",
+     @(minLongitude), @(maxLongitude), @(minLatitude), @(maxLatitude)];
+    
+
     
 /*    NSPredicate* predicate = [NSPredicate predicateWithBlock:^BOOL(PizzaPlace*  _Nonnull pp, NSDictionary<NSString *,id> * _Nullable bindings) {
         return pp.lat > lat - delta && pp.lat < lat + delta && pp.lon > lon - delta && pp.lon < lon + delta;
@@ -68,8 +83,11 @@
 //    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"id = %@", @"none"]];
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
     fetchRequest.sortDescriptors = @[descriptor];
+    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"name != %@", @"lalala"];
+    [fetchRequest setPredicate:predicate];
     //[fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"category = %@", self.category]];
 //    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"lat >= (%lf-0.01) AND lat <= (%lf+0.01) AND lon >= (%lf-0.01) AND lon >= (%lf+0.01)", lat, lat, lon, lon];
+    
     
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     // Setup fetched results
@@ -78,6 +96,11 @@
                                                                           sectionNameKeyPath:nil
                                                                                    cacheName:nil];
     [self.fetchedResultsController setDelegate:self];
+    
+    predicate = [NSPredicate predicateWithFormat:@"name == %@", @"lalala"];
+    self.fetchedResultsController.fetchRequest.predicate = predicate;
+    
+    [self.fetchedResultsController performFetch:nil];
 }
 
 - (void) viewDidAppear:(BOOL)animated {
@@ -159,13 +182,14 @@
 }
 
 -(void)refreshContextWithObjectDidChangeNotification:(NSNotification *)notification {
-    dispatch_async(dispatch_get_main_queue(), ^(){
+//    dispatch_async(dispatch_get_main_queue(), ^(){
         NSError* error = nil;
         [self.fetchedResultsController performFetch:&error];
+        [self.tableView reloadData];
         if(error) {
             NSLog(@"Can not fetch: %@", error);
         }
-    });
+//    });
 }
 
 @end
