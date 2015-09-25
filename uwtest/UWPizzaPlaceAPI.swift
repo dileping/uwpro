@@ -51,7 +51,7 @@ class UWPizzaPlaceAPI : NSObject {
             if let response = result.response {
                 let venues = response["venues"] as! [JSONParameters]?
                 if (venues != nil) {
-                    NSLog("venues: %@", venues!)
+                    callback(lat: lat, lon: lon, pizzaPlaces: venues!)
                 } else {
                     NSLog("No venues")
                 }

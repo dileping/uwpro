@@ -18,6 +18,9 @@
 		659256E01BB59C150053EB58 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 659256DF1BB59C150053EB58 /* Assets.xcassets */; };
 		659256E31BB59C150053EB58 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 659256E11BB59C150053EB58 /* LaunchScreen.storyboard */; };
 		65E300111BB5AB4600541D4A /* UWPizzaPlaceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65E300101BB5AB4600541D4A /* UWPizzaPlaceAPI.swift */; settings = {ASSET_TAGS = (); }; };
+		65E300171BB5BA2800541D4A /* PizzaPlace+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 65E300141BB5BA2800541D4A /* PizzaPlace+CoreDataProperties.m */; settings = {ASSET_TAGS = (); }; };
+		65E300181BB5BA2800541D4A /* PizzaPlace.m in Sources */ = {isa = PBXBuildFile; fileRef = 65E300161BB5BA2800541D4A /* PizzaPlace.m */; settings = {ASSET_TAGS = (); }; };
+		65E3001B1BB5BA8D00541D4A /* PizzaPlace+Gateway.m in Sources */ = {isa = PBXBuildFile; fileRef = 65E3001A1BB5BA8D00541D4A /* PizzaPlace+Gateway.m */; settings = {ASSET_TAGS = (); }; };
 		AF27AADF759B043135A53676 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73B2406C37AC1B98B7B7580D /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -39,6 +42,12 @@
 		659256E41BB59C150053EB58 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65E3000F1BB5AB4600541D4A /* uwtest-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "uwtest-Bridging-Header.h"; sourceTree = "<group>"; };
 		65E300101BB5AB4600541D4A /* UWPizzaPlaceAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UWPizzaPlaceAPI.swift; sourceTree = "<group>"; };
+		65E300131BB5BA2800541D4A /* PizzaPlace+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PizzaPlace+CoreDataProperties.h"; sourceTree = "<group>"; };
+		65E300141BB5BA2800541D4A /* PizzaPlace+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PizzaPlace+CoreDataProperties.m"; sourceTree = "<group>"; };
+		65E300151BB5BA2800541D4A /* PizzaPlace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PizzaPlace.h; sourceTree = "<group>"; };
+		65E300161BB5BA2800541D4A /* PizzaPlace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PizzaPlace.m; sourceTree = "<group>"; };
+		65E300191BB5BA8D00541D4A /* PizzaPlace+Gateway.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PizzaPlace+Gateway.h"; sourceTree = "<group>"; };
+		65E3001A1BB5BA8D00541D4A /* PizzaPlace+Gateway.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PizzaPlace+Gateway.m"; sourceTree = "<group>"; };
 		68CAE997286804294669AC63 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		69C80E242645FBAD05887F99 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		73B2406C37AC1B98B7B7580D /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,6 +107,12 @@
 				659256E11BB59C150053EB58 /* LaunchScreen.storyboard */,
 				659256E41BB59C150053EB58 /* Info.plist */,
 				659256DC1BB59C150053EB58 /* uwtest.xcdatamodeld */,
+				65E300131BB5BA2800541D4A /* PizzaPlace+CoreDataProperties.h */,
+				65E300141BB5BA2800541D4A /* PizzaPlace+CoreDataProperties.m */,
+				65E300151BB5BA2800541D4A /* PizzaPlace.h */,
+				65E300191BB5BA8D00541D4A /* PizzaPlace+Gateway.h */,
+				65E3001A1BB5BA8D00541D4A /* PizzaPlace+Gateway.m */,
+				65E300161BB5BA2800541D4A /* PizzaPlace.m */,
 				659256D01BB59C150053EB58 /* Supporting Files */,
 				6535D4481BB59F3900028FC0 /* UWLocationManager.h */,
 				6535D4491BB59F3900028FC0 /* UWLocationManager.m */,
@@ -248,10 +263,13 @@
 			files = (
 				659256D81BB59C150053EB58 /* ViewController.m in Sources */,
 				659256D51BB59C150053EB58 /* AppDelegate.m in Sources */,
+				65E300181BB5BA2800541D4A /* PizzaPlace.m in Sources */,
 				6535D44A1BB59F3900028FC0 /* UWLocationManager.m in Sources */,
 				659256D21BB59C150053EB58 /* main.m in Sources */,
+				65E300171BB5BA2800541D4A /* PizzaPlace+CoreDataProperties.m in Sources */,
 				659256DE1BB59C150053EB58 /* uwtest.xcdatamodeld in Sources */,
 				65E300111BB5AB4600541D4A /* UWPizzaPlaceAPI.swift in Sources */,
+				65E3001B1BB5BA8D00541D4A /* PizzaPlace+Gateway.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

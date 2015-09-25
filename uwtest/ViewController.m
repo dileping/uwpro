@@ -9,10 +9,13 @@
 #import "ViewController.h"
 #import "UWLocationManager.h"
 #import "uwtest-Swift.h"
+#import "PizzaPlace+Gateway.h"
+#import "AppDelegate.h"
 
 @interface ViewController () <UWLocationManagerDelegate>
 
 @property (nonatomic, strong, readwrite) UWLocationManager* locationManager;
+@property (nonatomic, strong, readwrite) UWPizzaPlaceAPI* api;
 
 @end
 
@@ -21,12 +24,21 @@
 - (void)awakeFromNib {
     self.locationManager = [UWLocationManager new];
     self.locationManager.delegate = self;
+    self.api = [UWPizzaPlaceAPI new];
 }
 
 - (void)locationManager:(UWLocationManager*)manager didObtainNewLongitude:(double)lon andLatitude:(double)lat {
     NSLog(@"lat: %f, lon: %f", lat, lon);
-    [[UWPizzaPlaceAPI new] pizzaPlaces:lat lon:lon callback:^(double lat, double lon, NSArray * _Nonnull pizzaPlaces) {
-        
+    [self.api pizzaPlaces:lat lon:lon callback:^(double lat, double lon, NSArray * _Nonnull pizzaPlaces) {
+        for(id pizzaPlaceResult in pizzaPlaces) {
+            id location = pizzaPlaceResult[@"location"];
+            [PizzaPlace pizzaPlaceWith:pizzaPlaceResult[@"id"]
+                                  name:pizzaPlaceResult[@"name"]
+                                   lat:[location[@"lat"] doubleValue]
+                                   lon:[location[@"lng"] doubleValue]];
+        }
+        AppDelegate* delegte = [[UIApplication sharedApplication] delegate];
+        [delegte saveToDisk];
     }];
 }
 
