@@ -21,6 +21,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="ANk-Q4-s3G" kind="show" identifier="PizzaPlaceDetail" id="6K0-QL-i0C"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -33,6 +36,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NKC-ET-mrF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="200" y="42"/>
+        </scene>
+        <!--Pizza Place View Controller-->
+        <scene sceneID="daE-IK-WCP">
+            <objects>
+                <viewController id="ANk-Q4-s3G" customClass="PizzaPlaceViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="eg7-CI-SCn"/>
+                        <viewControllerLayoutGuide type="bottom" id="k3L-VO-KcY"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="gJM-DF-XvU">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EAQ-l9-M7l" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="284" y="-609"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hHT-W0-Yud">

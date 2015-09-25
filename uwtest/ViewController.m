@@ -11,6 +11,7 @@
 #import "uwtest-Swift.h"
 #import "PizzaPlace+Gateway.h"
 #import "AppDelegate.h"
+#import "PizzaPlaceViewController.h"
 
 @interface ViewController () <UWLocationManagerDelegate, NSFetchedResultsControllerDelegate>
 
@@ -85,6 +86,11 @@
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self.locationManager startLocationService];
+}
+
+- (void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.locationManager stopLocationService];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -169,6 +175,14 @@
             NSLog(@"Can not fetch: %@", error);
         }
 //    });
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue identifier] isEqualToString:@"PizzaPlaceDetail"]) {
+        PizzaPlaceViewController *ctrl = [segue destinationViewController];
+        PizzaPlace* pizzaPlace = [self.fetchedResultsController objectAtIndexPath:[[self.tableView indexPathsForSelectedRows] objectAtIndex:0]];
+        ctrl.pizzaPlace = pizzaPlace;
+    }
 }
 
 @end
