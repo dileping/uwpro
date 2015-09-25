@@ -41,24 +41,13 @@
     double maxLatitude = lat + deltaLatitude;
     double minLongitude = lon - deltaLongitude;
     double maxLongitude = lon + deltaLongitude;
-    double delta = 0.1;
-/*    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"lat >= %@ AND lat <= %@ AND lon >= %@ AND lon <= %@", @(lat-0.1), @(lat+0.1), @(lon-0.1), @(lon+0.1)];*/
     NSPredicate* predicate = [NSPredicate predicateWithFormat:
      @"(%@ <= lon) AND (lon <= %@)"
      @"AND (%@ <= lat) AND (lat <= %@)",
      @(minLongitude), @(maxLongitude), @(minLatitude), @(maxLatitude)];
     
 
-    
-/*    NSPredicate* predicate = [NSPredicate predicateWithBlock:^BOOL(PizzaPlace*  _Nonnull pp, NSDictionary<NSString *,id> * _Nullable bindings) {
-        return pp.lat > lat - delta && pp.lat < lat + delta && pp.lon > lon - delta && pp.lon < lon + delta;
-    }];*/
     [self.fetchedResultsController.fetchRequest setPredicate:predicate];
-/*    NSError* error = nil;
-    [self.fetchedResultsController performFetch:&error];
-    if(error) {
-        NSLog(@"Can not fetch: %@", error);
-    }*/
     [self.api pizzaPlaces:lat lon:lon callback:^(double lat, double lon, NSArray * _Nonnull pizzaPlaces) {
         for(id pizzaPlaceResult in pizzaPlaces) {
             id location = pizzaPlaceResult[@"location"];
@@ -80,11 +69,8 @@
     [super viewDidLoad];
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"PizzaPlace"];
     [fetchRequest setFetchLimit:5];
-//    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"id = %@", @"none"]];
     NSSortDescriptor *descriptor = [NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
     fetchRequest.sortDescriptors = @[descriptor];
-    //[fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"category = %@", self.category]];
-//    NSPredicate* predicate = [NSPredicate predicateWithFormat:@"lat >= (%lf-0.01) AND lat <= (%lf+0.01) AND lon >= (%lf-0.01) AND lon >= (%lf+0.01)", lat, lat, lon, lon];
     
     
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
