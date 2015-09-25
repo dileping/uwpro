@@ -12,6 +12,7 @@
 #import "PizzaPlace+Gateway.h"
 #import "AppDelegate.h"
 #import "PizzaPlaceViewController.h"
+#import "PizzaPlaceTableViewCell.h"
 
 @interface ViewController () <UWLocationManagerDelegate, NSFetchedResultsControllerDelegate>
 
@@ -24,6 +25,8 @@
 @implementation ViewController
 
 - (void)awakeFromNib {
+    [self.tableView registerNib:[UINib nibWithNibName:@"PizzaPlaceTableViewCell" bundle:nil] forCellReuseIdentifier:@"pizzaPlaceCell"];
+    
     self.locationManager = [UWLocationManager new];
     self.locationManager.delegate = self;
     self.api = [UWPizzaPlaceAPI new];
@@ -160,9 +163,9 @@
     return [sectionInfo numberOfObjects];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"pizzaPlaceCell" forIndexPath:indexPath];
+    PizzaPlaceTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"pizzaPlaceCell" forIndexPath:indexPath];
     PizzaPlace* object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    [cell.textLabel setText:[object name]];
+    cell.pizzaPlace = object;
     return cell;
 }
 
