@@ -144,8 +144,8 @@
 
 - (void)saveToDisk {
     NSManagedObjectContext *managedObjectContext = self.backgroundObjectContext;
-    if (managedObjectContext != nil && [managedObjectContext hasChanges]) {
-        [managedObjectContext performBlock:^{
+    [managedObjectContext performBlock:^{
+        if (managedObjectContext != nil && [managedObjectContext hasChanges]) {
             NSError* error = nil;
             if (![managedObjectContext save:&error]) {
                 NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
@@ -154,8 +154,8 @@
             dispatch_async(dispatch_get_main_queue(), ^() {
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"reload" object:self];
             });
-        }];
-    }
+        }
+    }];
 }
 
 -(void)refreshChildContextWithObjectDidChangeNotification:(NSNotification *)notification {
