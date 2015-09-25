@@ -19,6 +19,7 @@
 
 - (void)awakeFromNib {
     self.locationManager = [UWLocationManager new];
+    self.locationManager.delegate = self;
 }
 
 - (void)locationManager:(UWLocationManager*)manager didObtainNewLongitude:(double)lon andLatitude:(double)lat {
