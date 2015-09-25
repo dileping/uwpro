@@ -7,7 +7,8 @@
 //
 
 #import "ViewController.h"
-#include "UWLocationManager.h"
+#import "UWLocationManager.h"
+#import "uwtest-Swift.h"
 
 @interface ViewController () <UWLocationManagerDelegate>
 
@@ -24,6 +25,9 @@
 
 - (void)locationManager:(UWLocationManager*)manager didObtainNewLongitude:(double)lon andLatitude:(double)lat {
     NSLog(@"lat: %f, lon: %f", lat, lon);
+    [[UWPizzaPlaceAPI new] pizzaPlaces:lat lon:lon callback:^(double lat, double lon, NSArray * _Nonnull pizzaPlaces) {
+        
+    }];
 }
 
 - (void)locationManager:(UWLocationManager*)manager didObtainError:(NSError*)error {
