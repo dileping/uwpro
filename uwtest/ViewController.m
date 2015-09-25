@@ -180,12 +180,11 @@
 //    });
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([[segue identifier] isEqualToString:@"PizzaPlaceDetail"]) {
-        PizzaPlaceViewController *ctrl = [segue destinationViewController];
-        PizzaPlace* pizzaPlace = [self.fetchedResultsController objectAtIndexPath:[[self.tableView indexPathsForSelectedRows] objectAtIndex:0]];
-        ctrl.pizzaPlace = pizzaPlace;
-    }
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    PizzaPlaceViewController *ctrl = [self.storyboard instantiateViewControllerWithIdentifier:@"PizzaPlaceDetail"];
+    PizzaPlace* pizzaPlace = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    ctrl.pizzaPlace = pizzaPlace;
+    [self.navigationController pushViewController:ctrl animated:YES];
 }
 
 @end
