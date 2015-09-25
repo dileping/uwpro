@@ -32,7 +32,7 @@
 
 - (void)locationManager:(UWLocationManager*)manager didObtainNewLongitude:(double)lon andLatitude:(double)lat {
     NSLog(@"lat: %f, lon: %f", lat, lon);
-    static double const D = 500000. * 1.1;
+    static double const D = 200. * 1.1;
     double const R = 6371009.; // Earth readius in meters
     double meanLatitidue = lat * M_PI / 180.;
     double deltaLatitude = D / R * 180. / M_PI;
