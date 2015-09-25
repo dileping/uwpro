@@ -105,6 +105,9 @@
     }
     _backgroundObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
     [_backgroundObjectContext setPersistentStoreCoordinator:coordinator];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshChildContextWithObjectDidChangeNotification:) name:NSManagedObjectContextObjectsDidChangeNotification object:_backgroundObjectContext];
+    
     return _backgroundObjectContext;
 }
 
@@ -150,6 +153,34 @@
             }
         }];
     }
+}
+
+-(void)refreshChildContextWithObjectDidChangeNotification:(NSNotification *)notification {
+    NSManagedObjectContext *changedContext = notification.object;
+    NSManagedObjectContext *childContext = self.managedObjectContext;
+    BOOL isParentContext = childContext.parentContext == changedContext;
+    if (!isParentContext) return;
+    //Collect the objectIDs of the objects that changed
+    NSMutableSet *objectIDs = [NSMutableSet set];
+    [changedContext performBlockAndWait:^{
+        NSDictionary *userInfo = notification.userInfo;
+        for (NSManagedObject *changedObject in userInfo[NSUpdatedObjectsKey]) {
+            [objectIDs addObject:changedObject.objectID];
+        }
+        for (NSManagedObject *changedObject in userInfo[NSInsertedObjectsKey]) {
+            [objectIDs addObject:changedObject.objectID];
+        }
+        for (NSManagedObject *changedObject in userInfo[NSDeletedObjectsKey]) {
+            [objectIDs addObject:changedObject.objectID];
+        }
+    }];
+    //Refresh the changed objects
+    [childContext performBlockAndWait:^{
+        for (NSManagedObjectID *objectID in objectIDs) {
+            NSManagedObject *object = [childContext objectRegisteredForID:objectID];
+            [childContext refreshObject:object mergeChanges:YES];
+        }  
+    }];
 }
 
 @end
