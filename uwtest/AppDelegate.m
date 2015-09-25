@@ -49,6 +49,7 @@
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+@synthesize backgroundObjectContext = _backgroundObjectContext;
 
 - (NSURL *)applicationDocumentsDirectory {
     // The directory the application uses to store the Core Data store file. This code uses a directory named "com.crossplusplus.uwtest" in the application's documents directory.
@@ -94,18 +95,30 @@
 }
 
 
+- (NSManagedObjectContext *)backgroundObjectContext {
+    if (_backgroundObjectContext != nil) {
+        return _backgroundObjectContext;
+    }
+    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
+    if (!coordinator) {
+        return nil;
+    }
+    _backgroundObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+    [_backgroundObjectContext setPersistentStoreCoordinator:coordinator];
+    return _backgroundObjectContext;
+}
+
 - (NSManagedObjectContext *)managedObjectContext {
     // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.)
     if (_managedObjectContext != nil) {
         return _managedObjectContext;
     }
-    
-    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
-    if (!coordinator) {
+    NSManagedObjectContext* backgroundContext = [self backgroundObjectContext];
+    if (backgroundContext == nil) {
         return nil;
     }
     _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-    [_managedObjectContext setPersistentStoreCoordinator:coordinator];
+    [_managedObjectContext setParentContext:backgroundContext];
     return _managedObjectContext;
 }
 
@@ -121,6 +134,21 @@
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }
+        
+    }
+    [self saveToDisk];
+}
+
+- (void)saveToDisk {
+    NSManagedObjectContext *managedObjectContext = self.backgroundObjectContext;
+    if (managedObjectContext != nil && [managedObjectContext hasChanges]) {
+        [managedObjectContext performBlock:^{
+            NSError* error = nil;
+            if (![managedObjectContext save:&error]) {
+                NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+                abort();
+            }
+        }];
     }
 }
 
